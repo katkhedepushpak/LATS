@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>error</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="alert alert-danger" role="alert">
+      <h1>{{code}}</h1>
+      <h1>{{msg}}</h1>
+      <p>What you were looking for is just not there.</p>
+      <h1><a href="{{ url_for('index') }}">Go to Home</a></h1>
+    </div>
+</body>
+</html>
