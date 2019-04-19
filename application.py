@@ -140,12 +140,14 @@ def nearestId():
 @socketio.on('connect')
 def connect():
         id=nearestId()
-        print(".........................................min_id")
-        print(id)
         emit('nearest',{'id':id,'latitude':hardware["latitude"],'longitude':hardware['longitude']}, broadcast=True)
 
 @app.route('/logout')
 def logout():
+    user = User.query.filter_by(id=session.get("id")).first()
+    user.latitude="999"
+    user.longitude="999"
+    db.session.commit()
     session.pop('username', None)
     session.pop('id',None)
     return redirect(url_for('index'))
