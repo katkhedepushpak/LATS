@@ -8,7 +8,7 @@ from flask_session import Session
 import datetime
 import json
 from flask_socketio import SocketIO,emit
-
+from login_required import login_required
 
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -34,12 +34,10 @@ class User(db.Model):
     longitude = db.Column(db.String)
 
 @app.route('/',methods=['GET','POST'])
+@login_required
 def index():
     if request.method == 'GET':
-        if session.get('username'):
-            return render_template("index.html",id=session.get("id"),username=session.get("username"))
-        else:
-            return redirect(url_for('login'))
+        return render_template("index.html",id=session.get("id"),username=session.get("username"))
     else:
         user = User.query.filter_by(username=session.get("username")).first()
         currentloc=json.loads(request.data)
@@ -71,6 +69,7 @@ def register():
         db.session.add(user)
         db.session.commit()
         print(user.id)
+        session["id"]=user.id
         session["username"] = username
         return redirect(url_for("index"))
     return render_template("register.html")
